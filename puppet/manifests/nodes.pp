@@ -36,7 +36,7 @@ node default {
     include redissetup
     include sysctlsetup
     #include heroku
-    include monit
+    #include monit
     include weighttp
     include security
     include memcachedsetup

@@ -28,15 +28,7 @@ class basic::packages{
 # brings the system up-to-date after importing it with Vagrant
 # runs only once after booting (checks /tmp/apt-get-update existence)
 class basic::update_aptget{
-    # class { 'apt':
-    #     always_apt_update    => false,
-    #     disable_keys         => undef,
-    #     proxy_host           => false,
-    #     proxy_port           => '8080',
-    #     purge_sources_list   => false,
-    #     purge_sources_list_d => false,
-    #     purge_preferences_d  => false
-    # }
+
     exec{'aptupdate':
         command => 'apt-get -y autoremove; apt-get -y autoclean; apt-get  -y -f install; apt-get update; touch /tmp/apt-get-updated',
         timeout => 0,

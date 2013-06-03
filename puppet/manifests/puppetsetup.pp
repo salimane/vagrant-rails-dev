@@ -10,7 +10,7 @@ class  puppetsetup {
 
     # puppet
     package {
-        'puppet':
+        ['puppet', 'libaugeas-ruby']:
             ensure => latest;
     }
 }

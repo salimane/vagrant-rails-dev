@@ -23,7 +23,7 @@
 #  sshkeytype                                   => 'ssh-rsa',
 #  sshkey                                       => ''
 # }
-define adduser ($uid = undef, $shell, $groups, $sshkeytype, $sshkey) {
+define adduser ($uid = undef, $shell, $groups, $sshkeytype = undef, $sshkey = undef) {
 
     $username = $title
 
@@ -65,12 +65,14 @@ define adduser ($uid = undef, $shell, $groups, $sshkeytype, $sshkey) {
             require =>FILE["/home/${username}/"]
     }
 
-    ssh_authorized_key{ $username:
-        ensure  => present,
-        user    => $username,
-        type    => $sshkeytype,
-        key     => $sshkey,
-        name    => $username,
-        require => FILE["/home/${username}/.ssh/authorized_keys"]
+    if ($sshkey != undef and $sshkeytype != undef) {
+        ssh_authorized_key{ $username:
+            ensure  => present,
+            user    => $username,
+            type    => $sshkeytype,
+            key     => $sshkey,
+            name    => $username,
+            require => FILE["/home/${username}/.ssh/authorized_keys"]
+        }
     }
 }

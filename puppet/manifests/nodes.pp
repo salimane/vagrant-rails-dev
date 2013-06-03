@@ -7,7 +7,7 @@ node vagrant-rails-dev {
     $username = 'vagrant'
 
     # add user vagrant
-    adduser { 'vagrant':
+    adduser { $username:
         shell      => '/bin/zsh',
         groups     => ['sudo'],
         sshkeytype => 'ssh-rsa',
@@ -35,8 +35,8 @@ node salimane-zenbook {
 
     $username = 'salimane'
 
-    # add user vagrant
-    adduser { 'vagrant':
+    # add user salimane
+    adduser { $username:
         shell      => '/bin/zsh',
         groups     => ['sudo'],
     }

@@ -2,7 +2,7 @@
 #
 class security {
 
-    package { ['fail2ban', 'htop', 'molly-guard', 'etckeeper', 'logwatch']:
+    package { ['fail2ban', 'htop', 'molly-guard', 'logwatch']:
         ensure => installed,
     }
 }

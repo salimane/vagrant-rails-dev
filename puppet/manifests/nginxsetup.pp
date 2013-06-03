@@ -1,11 +1,11 @@
 # == Class: nginxsetup
 #
-class nginxsetup ($username = 'vagrant') {
+class nginxsetup {
     exec {
         'nginxkey':
             command => 'wget http://nginx.org/keys/nginx_signing.key && apt-key add nginx_signing.key',
-            unless  => "test -e /home/${username}/nginx_signing.key",
-            cwd     => "/home/${username}",
+            unless  => "test -e /nginx_signing.key",
+            cwd     => "/",
             timeout => 0;
     }
 

@@ -12,8 +12,5 @@ class  puppetsetup {
     package {
         'puppet':
             ensure => latest;
-
-        'puppet-common':
-            ensure => absent;
     }
 }

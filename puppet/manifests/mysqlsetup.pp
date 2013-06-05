@@ -4,6 +4,16 @@ class mysqlsetup {
 
     #remove all system mysql before this
 
+    package { 'system-mysql':
+        ensure => 'absent',
+        name   => ['mysql-server', 'mysql-server-5.5', 'mysql-client', 'mysql-client-5.5', 'mysql-client-core-5.5', 'mysql-server-core-5.5', 'mysql-common' ],
+    }
+
+    apt::pin { '00percona':
+        priority => 1001,
+        require => Package['system-mysql'],
+    }
+
     apt::source { 'percona':
         location    => 'http://repo.percona.com/apt',
         release     => $lsbdistcodename,
@@ -14,7 +24,6 @@ class mysqlsetup {
         require => Apt::Pin['00percona']
     }
 
-    apt::pin { '00percona': priority => 1001 }
 
     package {
         ['percona-server-server-5.5', 'percona-server-client-5.5', 'libmysqlclient-dev'] :

@@ -36,6 +36,7 @@ class sysctlsetup {
             'set fs.file-max 1048576',
         ],
         notify => Exec['reload-sysctl'],
+        require => Package[['puppet','libaugeas-ruby']]
     }
 
     exec {'reload-sysctl':

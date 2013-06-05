@@ -10,8 +10,7 @@ Installation
 * run the following commands:
 
 ```shell
-gem install puppet specific_install
-gem specific_install -l git://github.com/maestrodev/librarian-puppet.git
+gem install puppet librarian-puppet
 vagrant plugin install vagrant-vbguest
 vagrant box add vagrant-rails-dev http://puppet-vagrant-boxes.puppetlabs.com/ubuntu-server-1204-x64.box
 git clone https://github.com/salimane/vagrant-rails-dev.git
@@ -38,6 +37,15 @@ Installed components
 
 Hints
 -----
+
+**Provisioning**
+
+To provision again in case of update or errors while the virtual machine is already up, use:
+
+```shell
+vagrant provision
+```
+It just runs puppet to apply manifests without restarting the virtual machine.
 
 **Startup speed**
 

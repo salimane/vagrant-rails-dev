@@ -26,7 +26,16 @@ class  dotfiles($username = 'vagrant') {
             user    => $username,
             command => "git clone https://github.com/salimane/dotfiles.git ${home_dir}/htdocs/dotfiles",
             creates => "${home_dir}/htdocs/dotfiles",
-            require => [Package['git'], Package['zsh'], USER[$username], File["${home_dir}/htdocs"]]
+            require => [Package['git'], Package['zsh'], USER[$username], File["${home_dir}/htdocs"]];
+
+        'hub':
+            command => "curl http://defunkt.io/hub/standalone -sLo /home/${username}/bin/hub && chmod +x /home/${username}/bin/hub",
+            unless  => "[ -f /home/${username}/bin/hub]",
+            require => [Package['git'], Class['rubysetup'], File["/home/${username}/bin"]],
+            cwd     => "/home/${username}",
+            user    => $username,
+            group   => $username,
+            timeout => 0;
     }
 
     file {

@@ -2,7 +2,7 @@
 #
 class mysqlsetup {
 
-    #remove all system mysql before this
+    include apt
 
     package { 'system-mysql':
         ensure => 'absent',

@@ -2,8 +2,7 @@
 #
 class nginxsetup {
 
-    class { 'nginx':
-    }
+    include nginx
 
     file { '/etc/nginx/conf.d/include-sites.conf':
         ensure => file,

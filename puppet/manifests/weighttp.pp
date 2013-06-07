@@ -18,8 +18,9 @@ class weighttp($username = 'vagrant') {
             creates => "${home_dir}/htdocs/weighttp";
 
         'install_weighttp':
+            provider => shell,
             cwd     =>"${home_dir}/htdocs/weighttp",
-            command => "${home_dir}/htdocs/weighttp/waf configure && ${home_dir}/htdocs/weighttp/waf build && ${home_dir}/htdocs/weighttp/waf install",
+            command => "${home_dir}/htdocs/weighttp/waf configure; ${home_dir}/htdocs/weighttp/waf build; ${home_dir}/htdocs/weighttp/waf install",
             require => Exec['clone_weighttp'],
             creates => '/usr/local/bin/weighttp';
     }

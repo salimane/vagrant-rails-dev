@@ -2,6 +2,5 @@
 #
 class memcachedsetup {
 
-    class { 'memcached':
-    }
+    include memcached
 }

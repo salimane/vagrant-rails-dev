@@ -2,6 +2,8 @@
 #
 class heroku {
 
+    include apt
+
     apt::source { 'heroku':
         location    => 'http://toolbelt.heroku.com/ubuntu',
         release     => ' ./',

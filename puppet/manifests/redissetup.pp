@@ -2,6 +2,8 @@
 #
 class redissetup {
 
+    include apt
+
     apt::ppa { 'ppa:chris-lea/redis-server': }
 
     package {

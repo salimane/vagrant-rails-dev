@@ -22,7 +22,7 @@ mod 'postgresql',
     :git => 'git://github.com/akumria/puppet-postgresql.git'
 
 mod 'monit',
-    :git => 'git://github.com/deck/puppet-monit.git'
+    :git => 'git://github.com/salimane/puppet-monit.git'
 
 mod 'rbenv',
     :git => 'git://github.com/alup/puppet-rbenv.git'

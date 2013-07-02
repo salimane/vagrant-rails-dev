@@ -21,12 +21,12 @@ class  dotfiles($username = 'vagrant') {
             require => [ Package['zsh'], USER[$username]];
 
         'clone_dotfiles':
-            cwd     =>"${home_dir}/htdocs",
+            cwd     =>"${home_dir}/src",
             group   => $username,
             user    => $username,
-            command => "git clone https://github.com/salimane/dotfiles.git ${home_dir}/htdocs/dotfiles",
-            creates => "${home_dir}/htdocs/dotfiles",
-            require => [Package['git'], Package['zsh'], USER[$username], File["${home_dir}/htdocs"]];
+            command => "git clone https://github.com/salimane/dotfiles.git ${home_dir}/src/dotfiles",
+            creates => "${home_dir}/src/dotfiles",
+            require => [Package['git'], Package['zsh'], USER[$username], File["${home_dir}/src"]];
 
         'hub':
             command => "curl http://defunkt.io/hub/standalone -sLo /home/${username}/bin/hub && chmod +x /home/${username}/bin/hub",
@@ -39,7 +39,7 @@ class  dotfiles($username = 'vagrant') {
     }
 
     file {
-        "/home/${username}/htdocs":
+        "/home/${username}/src":
             ensure => 'directory',
             group  => $username,
             owner  => $username;
@@ -58,62 +58,62 @@ class  dotfiles($username = 'vagrant') {
             ensure  => link,
             group   => $username,
             owner   => $username,
-            target  => "${home_dir}/htdocs/dotfiles/zsh/.zshrc",
+            target  => "${home_dir}/src/dotfiles/zsh/.zshrc",
             require => [Exec['clone_dotfiles'], File["${home_dir}/.zsh/etc"]];
 
         "${home_dir}/.zsh/etc":
             ensure  => link,
             group   => $username,
             owner   => $username,
-            target  => "${home_dir}/htdocs/dotfiles/zsh/.zsh/etc",
+            target  => "${home_dir}/src/dotfiles/zsh/.zsh/etc",
             require => Exec['clone_dotfiles'];
 
         "${home_dir}/.wgetrc":
             ensure  => link,
             group   => $username,
             owner   => $username,
-            target  => "${home_dir}/htdocs/dotfiles/wget/.wgetrc",
+            target  => "${home_dir}/src/dotfiles/wget/.wgetrc",
             require => Exec['clone_dotfiles'];
 
         "${home_dir}/.nanorc":
             ensure  => link,
             group   => $username,
             owner   => $username,
-            target  => "${home_dir}/htdocs/dotfiles/nano/.nanorc",
+            target  => "${home_dir}/src/dotfiles/nano/.nanorc",
             require => Exec['clone_dotfiles'];
 
         "${home_dir}/.gitconfig":
             ensure  => link,
             group   => $username,
             owner   => $username,
-            target  => "${home_dir}/htdocs/dotfiles/git/.gitconfig",
+            target  => "${home_dir}/src/dotfiles/git/.gitconfig",
             require => Exec['clone_dotfiles'];
 
         "${home_dir}/.gitattributes":
             ensure  => link,
             group   => $username,
             owner   => $username,
-            target  => "${home_dir}/htdocs/dotfiles/git/.gitattributes",
+            target  => "${home_dir}/src/dotfiles/git/.gitattributes",
             require => Exec['clone_dotfiles'];
 
         "${home_dir}/.gemrc":
             ensure  => link,
             group   => $username,
             owner   => $username,
-            target  => "${home_dir}/htdocs/dotfiles/rb/.gemrc",
+            target  => "${home_dir}/src/dotfiles/rb/.gemrc",
             require => Exec['clone_dotfiles'];
 
         "${home_dir}/.valgrindrc":
             ensure  => link,
             group   => $username,
             owner   => $username,
-            target  => "${home_dir}/htdocs/dotfiles/valgrind/.valgrindrc",
+            target  => "${home_dir}/src/dotfiles/valgrind/.valgrindrc",
             require => Exec['clone_dotfiles'];
     }
 
 
     exec { 'copy-binfiles':
-        cwd     => "${home_dir}/htdocs/dotfiles",
+        cwd     => "${home_dir}/src/dotfiles",
         group   => $username,
         user    => $username,
         command => "cp bin/* ${home_dir}/bin/ && chmod +x ${home_dir}/bin/*",

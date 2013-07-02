@@ -1,6 +1,6 @@
 # == Class: railssetup
 #
-class railssetup ($username = 'vagrant',  $rubyversion = '1.9.3-p392') {
+class railssetup ($username = 'vagrant',  $rubyversion = '1.9.3-p429') {
 
     $home_dir    = "/home/${username}"
 
@@ -11,7 +11,14 @@ class railssetup ($username = 'vagrant',  $rubyversion = '1.9.3-p392') {
         rubyversion =>  $rubyversion
     }
 
-    rbenv::gem { ['rails', 'bundle', 'unicorn', 'capistrano']:
+    rbenv::gem { ['rails']:
+        ensure  => '3.2.13',
+        user    => $username,
+        ruby    => $rubyversion,
+        require => Rbenv::Compile[$rubyversion],
+    }
+
+    rbenv::gem { ['bundle', 'unicorn', 'capistrano']:
         ensure  => latest,
         user    => $username,
         ruby    => $rubyversion,

@@ -1,6 +1,6 @@
 # == Class: railssetup
 #
-class rubysetup ($username = 'vagrant',  $rubyversion = '1.9.3-p392') {
+class rubysetup ($username = 'vagrant',  $rubyversion = '1.9.3-p429') {
 
     $home_dir    = "/home/${username}"
 

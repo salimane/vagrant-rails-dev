@@ -26,6 +26,7 @@ Vagrant.configure("2") do |config|
   # config.vm.network :public_network
 
   # config.vm.synced_folder "../data", "/vagrant_data"
+  config.vm.synced_folder ".", "/vagrant", :nfs => true
 
   config.vm.provider :virtualbox do |vb|
     # Don't boot with headless mode
@@ -35,6 +36,8 @@ Vagrant.configure("2") do |config|
     vb.customize ["modifyvm", :id, "--memory", "1024"]
     # allow symlinks in vm
     vb.customize ["setextradata", :id, "VBoxInternal2/SharedFoldersEnableSymlinksCreate/v-root", "1"]
+    vb.customize ["modifyvm", :id, "--natdnshostresolver1", "off"]
+    vb.customize ["modifyvm", :id, "--natdnsproxy1", "off"]
 
   end
 

@@ -16,7 +16,7 @@ class sysupdate{
 
 # just some packages
 class basic::packages{
-    $sysPackages = [ 'build-essential', 'zlib1g-dev', 'libssl-dev', 'libreadline-gplv2-dev', 'ssh', 'aptitude',
+    $sysPackages = [ 'build-essential', 'nfs-kernel-server', 'zlib1g-dev', 'libssl-dev', 'libreadline-gplv2-dev', 'ssh', 'aptitude',
     'zsh', 'git' , 'software-properties-common', 'language-pack-zh-hans-base', 'subversion', 'tmux', 'curl', 'pandoc', 'wget']
     package { $sysPackages:
         require => Exec['aptupgrade'],

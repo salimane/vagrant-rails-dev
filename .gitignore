@@ -2,6 +2,6 @@
 .vagrant
 .idea/
 .tmp/
-modules/
+/puppet/modules/*
+!/puppet/modules/dev/
 .librarian/
-Puppetfile.lock

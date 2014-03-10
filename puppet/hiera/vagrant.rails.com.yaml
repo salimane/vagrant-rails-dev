@@ -1,0 +1,16 @@
+---
+classes:
+  - dev
+
+database:
+  development:
+    adapter: mysql2
+    host: 127.0.0.1
+    username: dev_dev
+    password: 3WtJxWJtUP3Aq9xt
+    database: dev_development
+    pool: 5
+    timeout: 5000
+    host_ip: 127.0.0.1
+    access:
+      - 127.0.0.1/dev_development

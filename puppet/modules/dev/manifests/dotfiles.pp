@@ -11,14 +11,14 @@
 #
 # Sample Usage:
 #  dotfilesSetup
-class  dotfiles($username = 'vagrant') {
+class  dev::dotfiles($username = 'vagrant') {
 
     $home_dir = "/home/${username}"
 
     exec {
-        "chsh -s /bin/zsh ${username}":
-            unless  => "grep -E '^${username}.+:/bin/zsh$' /etc/passwd",
-            require => [ Package['zsh'], USER[$username]];
+        # "chsh -s /bin/zsh ${username}":
+        #     unless  => "grep -E '^${username}.+:/bin/zsh$' /etc/passwd",
+        #     require => [ Package['zsh'], USER[$username]];
 
         'clone_dotfiles':
             cwd     =>"${home_dir}/src",
@@ -29,7 +29,7 @@ class  dotfiles($username = 'vagrant') {
             require => [Package['git'], Package['zsh'], USER[$username], File["${home_dir}/src"]];
 
         'hub':
-            command => "curl http://defunkt.io/hub/standalone -sLo /home/${username}/bin/hub && chmod +x /home/${username}/bin/hub",
+            command => "gem install hub && hub hub standalone > ${home_dir}/bin/hub && chmod +x ${home_dir}/bin/hub",
             unless  => "[ -f /home/${username}/bin/hub]",
             require => [Package['git'], Class['rubysetup'], File["/home/${username}/bin"]],
             cwd     => "/home/${username}",

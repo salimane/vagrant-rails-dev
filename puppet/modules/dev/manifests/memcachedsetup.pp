@@ -1,6 +1,6 @@
 # == Class: memcachedsetup
 #
-class memcachedsetup {
+class dev::memcachedsetup {
 
     include memcached
 }

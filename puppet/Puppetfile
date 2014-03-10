@@ -1,13 +1,13 @@
 forge "http://forge.puppetlabs.com"
 
 mod 'sqlite3',
-    :git => "git://github.com/puppetlabs/puppetlabs-sqlite3.git"
+    :git => "git://github.com/puppetlabs/puppetlabs-sqlite.git"
+
+mod 'epel',
+    :git => "git://github.com/stahnma/puppet-module-epel.git"
 
 mod 'stdlib',
     :git => "git://github.com/puppetlabs/puppetlabs-stdlib.git"
-
-mod 'apt',
-    :git => "git://github.com/puppetlabs/puppetlabs-apt.git"
 
 mod 'nginx',
     :git => "git://github.com/jfryman/puppet-nginx.git"
@@ -18,15 +18,26 @@ mod 'ntp',
 mod 'concat',
     :git => "git://github.com/ripienaar/puppet-concat.git"
 
+mod 'mysql',
+    :git => "git://github.com/puppetlabs/puppetlabs-mysql.git"
+
+mod 'sysctl',
+    :git => "https://github.com/thias/puppet-sysctl"
+
+mod 'sudo',
+    :git => "git@github.com:saz/puppet-sudo.git"
+
+mod 'rvm',
+    :git => 'https://github.com/maestrodev/puppet-rvm.git',
+    :ref => 'maestrodev'
+
+mod 'firewall',
+    :git => 'https://github.com/puppetlabs/puppetlabs-firewall'
+
 mod 'postgresql',
-    :git => 'git://github.com/akumria/puppet-postgresql.git'
-
-mod 'monit',
-    :git => 'git://github.com/salimane/puppet-monit.git'
-
-mod 'rbenv',
-    :git => 'git://github.com/alup/puppet-rbenv.git'
+    :git => 'https://github.com/puppetlabs/puppetlabs-postgresql'
 
 mod 'memcached',
-    :git => 'git://github.com/saz/puppet-memcached.git'
+    :git => 'https://github.com/saz/puppet-memcached'
+
 

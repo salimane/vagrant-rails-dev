@@ -23,11 +23,11 @@
 #  sshkeytype                                   => 'ssh-rsa',
 #  sshkey                                       => ''
 # }
-define adduser ($uid = undef, $shell, $groups, $sshkeytype = undef, $sshkey = undef) {
+define dev::adduser ($uid = undef, $shell, $groups, $sshkeytype = undef, $sshkey = undef) {
 
     $username = $title
 
-    user { $username:
+    $user_resource = {
         comment    =>  $username,
         home       => "/home/${username}",
         shell      => $shell,
@@ -35,6 +35,7 @@ define adduser ($uid = undef, $shell, $groups, $sshkeytype = undef, $sshkey = un
         managehome => true,
         groups     => $groups
     }
+    ensure_resource('user', $username, $user_resource)
 
     group { $username:
         gid     => $uid,

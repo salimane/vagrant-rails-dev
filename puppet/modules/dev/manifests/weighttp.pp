@@ -1,8 +1,8 @@
-# == Class: weighttp
+# == Class: dev::weighttp
 #
-class weighttp($username = 'vagrant') {
+class dev::weighttp($username = 'vagrant') {
 
-    package { ['libev-dev']:
+    package { ['libev-devel']:
         ensure => installed,
     }
 

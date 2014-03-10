@@ -1,0 +1,134 @@
+FORGE
+  remote: http://forge.puppetlabs.com
+  specs:
+    puppetlabs/apache (0.11.0)
+      puppetlabs/concat (>= 1.0.0)
+      puppetlabs/stdlib (>= 2.4.0)
+    puppetlabs/apt (1.4.1)
+      puppetlabs/stdlib (>= 2.2.1)
+    puppetlabs/concat (1.1.0-rc1)
+      puppetlabs/stdlib (>= 3.0.0)
+    puppetlabs/firewall (1.0.0)
+    puppetlabs/stdlib (4.1.0)
+
+GIT
+  remote: git://github.com/jfryman/puppet-nginx.git
+  ref: master
+  sha: 7cf6dac978fe08e061ed9201284c7a5bf22af2a3
+  specs:
+    nginx (0.0.7)
+      puppetlabs/apt (>= 1.0.0)
+      puppetlabs/concat (>= 1.0.0)
+      puppetlabs/stdlib (>= 0.1.6)
+
+GIT
+  remote: git://github.com/puppetlabs/puppetlabs-mysql.git
+  ref: master
+  sha: 1454a5ba198ff48a13d0843f9682e70e28abc83f
+  specs:
+    mysql (2.2.1)
+      puppetlabs/stdlib (>= 3.2.0)
+
+GIT
+  remote: git://github.com/puppetlabs/puppetlabs-ntp.git
+  ref: master
+  sha: 61ff8929f5803dfbc698ce67e6e0844d6fa0b70c
+  specs:
+    ntp (3.0.2)
+      puppetlabs/stdlib (>= 0.1.6)
+
+GIT
+  remote: git://github.com/puppetlabs/puppetlabs-sqlite.git
+  ref: master
+  sha: ac1832686dd7dcc14fee46bfcc027c389a75c263
+  specs:
+    sqlite3 (0.0.1)
+
+GIT
+  remote: git://github.com/puppetlabs/puppetlabs-stdlib.git
+  ref: master
+  sha: ab981422a67636441f1bfebaaade36aa690f1f25
+  specs:
+    stdlib (4.1.0)
+
+GIT
+  remote: git://github.com/ripienaar/puppet-concat.git
+  ref: master
+  sha: 24906d1bca3f8a1b93b24d71c0e081eda57afc9e
+  specs:
+    concat (1.1.0-rc1)
+      puppetlabs/stdlib (>= 4.0.0)
+
+GIT
+  remote: git://github.com/stahnma/puppet-module-epel.git
+  ref: master
+  sha: 37333dcda9f1c4252c5e2bf38d0037192a2369c8
+  specs:
+    epel (0.0.6)
+
+GIT
+  remote: git@github.com:saz/puppet-sudo.git
+  ref: master
+  sha: 09a491db41edbb18e7a8d7b779f3e7c1c9c7b8fa
+  specs:
+    sudo (3.0.1)
+      puppetlabs/stdlib (>= 2.3.0)
+
+GIT
+  remote: https://github.com/maestrodev/puppet-rvm.git
+  ref: maestrodev
+  sha: c9d9268da2d51264b4d2b1b7bbe8d9c1149731c6
+  specs:
+    rvm (1.4.2)
+      puppetlabs/apache (>= 0.9.0)
+      puppetlabs/stdlib (>= 3.2.0)
+
+GIT
+  remote: https://github.com/puppetlabs/puppetlabs-firewall
+  ref: master
+  sha: eee305f7e966debee1f94524c84d217c413afb78
+  specs:
+    firewall (1.0.1)
+
+GIT
+  remote: https://github.com/puppetlabs/puppetlabs-postgresql
+  ref: master
+  sha: 0a8a9a5e1d375150398d70a0193ed99fbbc4e13d
+  specs:
+    postgresql (3.3.1)
+      puppetlabs/apt (< 2.0.0, >= 1.1.0)
+      puppetlabs/concat (< 2.0.0, >= 1.0.0)
+      puppetlabs/firewall (>= 0.0.4)
+      puppetlabs/stdlib (< 5.0.0, >= 3.2.0)
+
+GIT
+  remote: https://github.com/saz/puppet-memcached
+  ref: master
+  sha: 658374848a6d2cf07f0bf714bc34709e9d0ee109
+  specs:
+    memcached (2.4.0)
+      puppetlabs/firewall (>= 0.1.0)
+      puppetlabs/stdlib (>= 3.2.0)
+
+GIT
+  remote: https://github.com/thias/puppet-sysctl
+  ref: master
+  sha: b57ae16e18a5b37540b54769f789f92ac955cebd
+  specs:
+    sysctl (0.3.0)
+
+DEPENDENCIES
+  concat (>= 0)
+  epel (>= 0)
+  firewall (>= 0)
+  memcached (>= 0)
+  mysql (>= 0)
+  nginx (>= 0)
+  ntp (>= 0)
+  postgresql (>= 0)
+  rvm (>= 0)
+  sqlite3 (>= 0)
+  stdlib (>= 0)
+  sudo (>= 0)
+  sysctl (>= 0)
+

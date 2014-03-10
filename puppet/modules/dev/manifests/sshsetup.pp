@@ -1,7 +1,6 @@
 # Definition: sshsetup
 #
-class  sshsetup {
-    file { '/etc/ssh/sshd_config':  }
+class  dev::sshsetup {
 
     file_line { 'rootlogin':
         path    => '/etc/ssh/sshd_config',

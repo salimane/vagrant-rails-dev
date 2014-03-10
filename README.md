@@ -6,17 +6,18 @@ Installation
 
 * Install git, ruby
 * Install virtualbox using the packages at [Download VirtualBox](https://www.virtualbox.org/wiki/Downloads)
-* Install vagrant using the installation instructions in the [Getting Started document](http://vagrantup.com/v1/docs/getting-started/index.html)
+* Install vagrant using the installation instructions in the [Getting Started document](http://www.vagrantup.com/downloads.html)
 * run the following commands:
 
 ```shell
-gem install puppet librarian-puppet
-vagrant plugin install vagrant-vbguest
-vagrant box add vagrant-rails-dev http://puppet-vagrant-boxes.puppetlabs.com/ubuntu-server-1204-x64.box
+gem install librarian-puppet
+vagrant plugin install vagrant-hostmanager
+vagrant box add vagrant-rails-dev http://puppet-vagrant-boxes.puppetlabs.com/centos-64-x64-vbox4210.box
+mkdir -p $HOME/src && cd $HOME/src
 git clone https://github.com/salimane/vagrant-rails-dev.git
-cd vagrant-rails-dev/puppet
-librarian-puppet install --clean
+cd vagrant-rails-dev/puppet && librarian-puppet install --clean
 vagrant up
+vagrant provision
 vagrant ssh
 ```
 
@@ -26,8 +27,8 @@ Installed components
 * zsh
 * nginx
 * sysctl configurations for lot of connections
-* rbenv + rails
-* percona mysql server
+* rvm + ruby 2.1.0 + rails 3.2.16 + 'bundle' gem
+* mysql server
 * postgresql
 * redis
 * memcached
@@ -47,6 +48,19 @@ vagrant provision
 ```
 It just runs puppet to apply manifests without restarting the virtual machine.
 
+
+**Restart Virtual Machine**
+
+To restart the virtual machine, use:
+
+```shell
+vagrant halt && vagrant up
+
+or
+
+vagrant reload
+```
+
 **Startup speed**
 
 To speed up the startup process after the first run, use:
@@ -55,4 +69,13 @@ To speed up the startup process after the first run, use:
 vagrant up --no-provision
 ```
 It just starts the virtual machine without provisioning of the puppet recipes.
+
+**Rebuild**
+
+If you messed up your box or for whatever reasons, you want to start fresh, destroy the box and build again, simply use:
+
+```shell
+vagrant destroy && vagrant up
+```
+It will delete the entire virtual machine and build it from scratch again.
 

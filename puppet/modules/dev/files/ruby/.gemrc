@@ -1,0 +1,13 @@
+# ~/.gemrc
+---
+:verbose: true
+:bulk_threshold: 1000
+install: --no-ri --no-rdoc --env-shebang
+:sources:
+- http://gemcutter.org
+- http://gems.rubyforge.org/
+- http://gems.github.com
+:benchmark: false
+:backtrace: false
+update: --no-ri --no-rdoc --env-shebang
+:update_sources: true

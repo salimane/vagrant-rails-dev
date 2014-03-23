@@ -86,11 +86,11 @@ class dev::web ($username = 'vagrant', $group = 'vagrant') {
     require => Package['nginx'],
   }
 
-  realize Exec['webtatic-replace-mysql']
+  # realize Exec['webtatic-replace-mysql']
 
-  package { 'mysql55-devel':
+  package { 'mysql-devel':
     ensure  => installed,
-    require => Exec['webtatic-replace-mysql']
+    # require => Exec['webtatic-replace-mysql']
   }
 
 }

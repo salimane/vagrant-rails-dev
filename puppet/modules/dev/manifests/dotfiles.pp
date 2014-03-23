@@ -30,12 +30,12 @@ class  dev::dotfiles($username = 'vagrant') {
 
         'hub':
             command => "gem install hub && hub hub standalone > ${home_dir}/bin/hub && chmod +x ${home_dir}/bin/hub",
-            unless  => "[ -f /home/${username}/bin/hub]",
-            require => [Package['git'], Class['rubysetup'], File["/home/${username}/bin"]],
-            cwd     => "/home/${username}",
+            unless  => "[ -f ${home_dir}/bin/hub]",
+            creates => "${home_dir}/bin/hub",
+            require => [Package['git'], Class['dev::rubysetup'], File["${home_dir}/bin"]],
+            cwd     => "${home_dir}",
             user    => $username,
-            group   => $username,
-            timeout => 0;
+            group   => $username;
     }
 
     file {

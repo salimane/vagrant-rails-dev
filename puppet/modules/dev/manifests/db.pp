@@ -7,8 +7,8 @@
 #
 # Actions:
 #   - create user mysql with proper group
-#   - install mysql55 client package
-#   - install mysql55 server package
+#   - install mysql client package
+#   - install mysql server package
 #   - create database according to environment
 #   - Setup mysql user access/privileges loaded from related environment yaml file
 #
@@ -28,16 +28,16 @@ class dev::db($env = 'development') {
   $account = hiera('database')
 
   #Needs mysql client
-  realize Exec['webtatic-replace-mysql']
+  # realize Exec['webtatic-replace-mysql']
   class { 'mysql::client':
-    package_name => 'mysql55',
-    require      => Exec['webtatic-replace-mysql']
+    package_name => 'mysql',
+    # require      => Exec['webtatic-replace-mysql']
   } ->
   class { 'mysql::server':
-    package_name     => 'mysql55-server',
+    package_name     => 'mysql-server',
     root_password    => 'wrB5TvCCfYEsBN4k',
     override_options => { 'mysqld' => { 'max_connections' => '1024' }, 'bind_address'  => $account[$env]['host_ip'], },
-    require          => Exec['webtatic-replace-mysql']
+    # require          => Exec['webtatic-replace-mysql']
   }
 
   Database {

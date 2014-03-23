@@ -31,7 +31,7 @@ class dev ($username = 'vagrant', $group = 'vagrant') {
   include dev::heroku
   include dev::memcachedsetup
   include dev::rubysetup
-  include dev::weighttp
+  # include dev::weighttp
   class { 'firewall': ensure => 'stopped'}
 
 }

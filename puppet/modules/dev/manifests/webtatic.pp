@@ -85,18 +85,18 @@ class dev::webtatic  {
       system => true,
     }
     #Make sure the user is in place before installing the mysql server package
-    User['mysql'] -> Package <| name == 'mysql55-server' |>
+    User['mysql'] -> Package <| name == 'mysql-server' |>
 
     #Resource ordering, make sure the yum repo is inplace before trying to install any of the mysql55 packages
     #Collectors so that it only occurs when/if the package is realized
-    Yumrepo['webtatic'] -> Package <| name == 'mysql55' |>
-    Yumrepo['webtatic'] -> Package <| name == 'mysql55-bench' |>
-    Yumrepo['webtatic'] -> Package <| name == 'mysql55-devel' |>
-    Yumrepo['webtatic'] -> Package <| name == 'mysql55-embedded' |>
-    Yumrepo['webtatic'] -> Package <| name == 'mysql55-embedded-devel' |>
-    Yumrepo['webtatic'] -> Package <| name == 'mysql55-libs' |>
-    Yumrepo['webtatic'] -> Package <| name == 'mysql55-server' |>
-    Yumrepo['webtatic'] -> Package <| name == 'mysql55-test' |>
+    Yumrepo['webtatic'] -> Package <| name == 'mysql' |>
+    Yumrepo['webtatic'] -> Package <| name == 'mysql-bench' |>
+    Yumrepo['webtatic'] -> Package <| name == 'mysql-devel' |>
+    Yumrepo['webtatic'] -> Package <| name == 'mysql-embedded' |>
+    Yumrepo['webtatic'] -> Package <| name == 'mysql-embedded-devel' |>
+    Yumrepo['webtatic'] -> Package <| name == 'mysql-libs' |>
+    Yumrepo['webtatic'] -> Package <| name == 'mysql-server' |>
+    Yumrepo['webtatic'] -> Package <| name == 'mysql-test' |>
 
     #For the Exec
     Exec['webtatic-replace-mysql'] -> Package <| name == 'mysql55' |>

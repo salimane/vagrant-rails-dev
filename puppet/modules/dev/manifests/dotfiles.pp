@@ -28,14 +28,13 @@ class  dev::dotfiles($username = 'vagrant') {
             creates => "${home_dir}/src/dotfiles",
             require => [Package['git'], Package['zsh'], USER[$username], File["${home_dir}/src"]];
 
-        'hub':
-            command => "gem install hub && hub hub standalone > ${home_dir}/bin/hub && chmod +x ${home_dir}/bin/hub",
-            unless  => "[ -f ${home_dir}/bin/hub]",
-            creates => "${home_dir}/bin/hub",
-            require => [Package['git'], Class['dev::rubysetup'], File["${home_dir}/bin"]],
-            cwd     => "${home_dir}",
-            user    => $username,
-            group   => $username;
+        #'hub':
+        #    command => "gem install hub && hub hub standalone > ${home_dir}/bin/hub && chmod +x ${home_dir}/bin/hub",
+        #    creates => "${home_dir}/bin/hub",
+        #    require => [Package['git'], Class['dev::rubysetup'], File["${home_dir}/bin"]],
+        #    cwd     => $home_dir,
+        #    user    => $username,
+        #    group   => $username;
     }
 
     file {

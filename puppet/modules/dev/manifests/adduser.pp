@@ -23,7 +23,7 @@
 #  sshkeytype                                   => 'ssh-rsa',
 #  sshkey                                       => ''
 # }
-define dev::adduser ($uid = undef, $shell, $groups, $sshkeytype = undef, $sshkey = undef) {
+define dev::adduser ($uid, $shell, $groups, $sshkeytype = undef, $sshkey = undef) {
 
     $username = $title
 

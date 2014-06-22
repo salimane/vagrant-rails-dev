@@ -12,10 +12,9 @@ Installation
 ```shell
 gem install librarian-puppet
 vagrant plugin install vagrant-hostmanager
-vagrant box add vagrant-rails-dev http://puppet-vagrant-boxes.puppetlabs.com/centos-64-x64-vbox4210.box
 mkdir -p $HOME/src && cd $HOME/src
 git clone https://github.com/salimane/vagrant-rails-dev.git
-cd vagrant-rails-dev/puppet && librarian-puppet install --clean
+cd vagrant-rails-dev/puppet && librarian-puppet install
 vagrant up
 vagrant provision
 vagrant ssh
@@ -27,7 +26,7 @@ Installed components
 * zsh
 * nginx
 * sysctl configurations for lot of connections
-* rvm + ruby 2.1.0 + rails 3.2.16 + 'bundle' gem
+* rvm + ruby 2.1.2 + 'bundle' gem
 * mysql server
 * postgresql
 * redis
@@ -78,4 +77,3 @@ If you messed up your box or for whatever reasons, you want to start fresh, dest
 vagrant destroy && vagrant up
 ```
 It will delete the entire virtual machine and build it from scratch again.
-

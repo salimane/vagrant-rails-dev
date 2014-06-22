@@ -23,7 +23,7 @@ class dev ($username = 'vagrant', $group = 'vagrant') {
     username => $username,
     group    => $group,
   }
-  class { 'dev::db': env => $env }
+  class { 'dev::db': }
   class {'postgresql::client': }
   class {'postgresql::server': }
   include dev::dotfiles

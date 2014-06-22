@@ -13,11 +13,11 @@ class dev::webtatic  {
 
   if $::osfamily == 'RedHat' and $::operatingsystem != 'Fedora' {
 
-    if $operatingsystemrelease =~ /^5.*/  {
+    if $::operatingsystemrelease =~ /^5.*/  {
       $os_release = 'centos'
       $mirror_sub_path = "${os_release}/5"
-    } elsif $operatingsystemrelease =~ /^6.*/  {
-      $os_release = "el6"
+    } elsif $::operatingsystemrelease =~ /^6.*/  {
+      $os_release = 'el6'
       $mirror_sub_path = $os_release
     }
 
@@ -29,7 +29,7 @@ class dev::webtatic  {
       gpgcheck       => '1',
       gpgkey         => 'file:///etc/pki/rpm-gpg/RPM-GPG-KEY-webtatic-andy',
       descr          => "Webtatic Repository ${os_release} - ${::architecture}",
-      exclude        => $exclude_pkgs,
+      exclude        => $::exclude_pkgs,
     }
 
     yumrepo { 'webtatic-debuginfo':

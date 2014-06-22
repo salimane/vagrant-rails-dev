@@ -19,9 +19,9 @@ class dev::weighttp($username = 'vagrant') {
 
         'install_weighttp':
             provider => shell,
-            cwd     =>"${home_dir}/src/weighttp",
-            command => "${home_dir}/src/weighttp/waf configure; ${home_dir}/src/weighttp/waf build; ${home_dir}/src/weighttp/waf install",
-            require => Exec['clone_weighttp'],
-            creates => '/usr/local/bin/weighttp';
+            cwd      => "${home_dir}/src/weighttp",
+            command  => "${home_dir}/src/weighttp/waf configure; ${home_dir}/src/weighttp/waf build; ${home_dir}/src/weighttp/waf install",
+            require  => Exec['clone_weighttp'],
+            creates  => '/usr/local/bin/weighttp';
     }
 }

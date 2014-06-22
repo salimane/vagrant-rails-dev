@@ -36,7 +36,12 @@ class dev::db($env = 'development') {
   class { 'mysql::server':
     package_name     => 'mysql-server',
     root_password    => 'wrB5TvCCfYEsBN4k',
-    override_options => { 'mysqld' => { 'max_connections' => '1024' }, 'bind_address'  => $account[$env]['host_ip'], },
+    override_options => {
+      'mysqld'       => {
+        'max_connections' => '1024'
+      },
+      'bind_address' => $account[$env]['host_ip'],
+    },
     # require          => Exec['webtatic-replace-mysql']
   }
 

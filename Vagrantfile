@@ -19,7 +19,7 @@ SCRIPT
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
-  config.vm.box = "puppetlabs/centos-6.5-64-puppet"
+  config.vm.box = "spantree/Centos-6.5_x86-64"
   config.vm.box_check_update = true
 
   config.vm.hostname = 'vagrant.rails.com'
@@ -30,8 +30,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   config.ssh.forward_agent = true
 
-  config.vm.synced_folder "../../src", "/home/vagrant/src"
-  config.vm.synced_folder ".", "/vagrant"
+  config.vm.synced_folder "../../src", "/home/vagrant/src", type: 'nfs'
+  config.vm.synced_folder ".", "/vagrant", type: 'nfs'
 
   config.vm.provider "virtualbox" do |vb|
   #   vb.gui = true

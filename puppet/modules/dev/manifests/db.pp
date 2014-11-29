@@ -65,6 +65,51 @@ class dev::db($env = 'development') {
     require    => Class['mysql::server']
   }
 
+  # mysql::db { $account['test']['database']:
+  #   ensure   => 'present',
+  #   user     => $account['test']['username'],
+  #   password => $account['test']['password'],
+  #   grant    => ['all'],
+  #   charset  => 'utf8',
+  # }
+
+  dev::db_grant { $account['test']['access'] :
+    username   => $account['test']['username'],
+    password   => $account['test']['password'],
+    database   => '*',
+    privileges => ['all'],
+  }
+
+  mysql::db { $account['staging']['database']:
+    ensure   => 'present',
+    user     => $account['staging']['username'],
+    password => $account['staging']['password'],
+    grant    => ['all'],
+    charset  => 'utf8',
+  }
+
+  dev::db_grant { $account['staging']['access'] :
+    username   => $account['staging']['username'],
+    password   => $account['staging']['password'],
+    database   => $account['staging']['database'],
+    privileges => ['all'],
+  }
+
+  mysql::db { $account['production']['database']:
+    ensure   => 'present',
+    user     => $account['production']['username'],
+    password => $account['production']['password'],
+    grant    => ['all'],
+    charset  => 'utf8',
+  }
+
+  dev::db_grant { $account['production']['access'] :
+    username   => $account['production']['username'],
+    password   => $account['production']['password'],
+    database   => $account['production']['database'],
+    privileges => ['all'],
+  }
+
   include mysql::server::account_security
   include mysql::server::mysqltuner
 

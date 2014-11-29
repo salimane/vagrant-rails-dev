@@ -4,17 +4,18 @@ Set up my vagrant rails development box
 Installation
 ------------
 
-* Install git, ruby
-* Install virtualbox using the packages at [Download VirtualBox](https://www.virtualbox.org/wiki/Downloads)
-* Install vagrant using the installation instructions in the [Getting Started document](http://www.vagrantup.com/downloads.html)
-* run the following commands:
+-	Install git, ruby
+-	Install virtualbox using the packages at [Download VirtualBox](https://www.virtualbox.org/wiki/Downloads)
+-	Install vagrant using the installation instructions in the [Getting Started document](http://www.vagrantup.com/downloads.html)
+-	run the following commands:
 
 ```shell
-gem install librarian-puppet
 vagrant plugin install vagrant-hostmanager
 mkdir -p $HOME/src && cd $HOME/src
 git clone https://github.com/salimane/vagrant-rails-dev.git
-cd vagrant-rails-dev/puppet && librarian-puppet install
+cd vagrant-rails-dev/
+bundle install
+cd puppet && librarian-puppet install
 vagrant up
 vagrant provision
 vagrant ssh
@@ -23,17 +24,16 @@ vagrant ssh
 Installed components
 --------------------
 
-* zsh
-* nginx
-* sysctl configurations for lot of connections
-* rvm + ruby 2.1.2 + 'bundle' gem
-* mysql server
-* postgresql
-* redis
-* memcached
-* heroku toolbelt
-* weighttp
-
+-	zsh
+-	nginx
+-	sysctl configurations for lot of connections
+-	rvm + ruby 2.1.5 + 'bundle' gem
+-	mysql server
+-	postgresql
+-	redis
+-	memcached
+-	heroku toolbelt
+-	weighttp
 
 Hints
 -----
@@ -45,8 +45,8 @@ To provision again in case of update or errors while the virtual machine is alre
 ```shell
 vagrant provision
 ```
-It just runs puppet to apply manifests without restarting the virtual machine.
 
+It just runs puppet to apply manifests without restarting the virtual machine.
 
 **Restart Virtual Machine**
 
@@ -67,6 +67,7 @@ To speed up the startup process after the first run, use:
 ```shell
 vagrant up --no-provision
 ```
+
 It just starts the virtual machine without provisioning of the puppet recipes.
 
 **Rebuild**
@@ -76,4 +77,5 @@ If you messed up your box or for whatever reasons, you want to start fresh, dest
 ```shell
 vagrant destroy && vagrant up
 ```
+
 It will delete the entire virtual machine and build it from scratch again.

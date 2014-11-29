@@ -9,13 +9,13 @@
 #   - Create application directories
 #   - Install/setup/manage nginx configurations
 #   - Install multi-user rvm
-#   - Install ruby 2.0, bundler
+#   - Install ruby, bundler
 #
 # Requires:
 #   - dev::dependencies
 #
 # Sample Usage:
-#   class { 'dev::web' : env => 'development', $username = 'vagrant', $group = 'vagrant' }
+#   class { 'dev::web' : username => 'vagrant', group => 'vagrant' }
 #
 #
 class dev::web ($username = 'vagrant', $group = 'vagrant') {
@@ -37,10 +37,10 @@ class dev::web ($username = 'vagrant', $group = 'vagrant') {
   }
 
   file { '/etc/nginx/ssl/':
-    ensure  => directory,
-    owner   => 'root',
-    group   => 'root',
-    mode    => '0644',
+    ensure => directory,
+    owner  => 'root',
+    group  => 'root',
+    mode   => '0644',
   }
 
   file { 'selfsigned.key':

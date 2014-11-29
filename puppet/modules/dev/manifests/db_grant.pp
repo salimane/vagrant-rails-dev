@@ -36,6 +36,6 @@ define dev::db_grant($username, $password, $database, $privileges) {
     provider   => 'mysql',
     table      => "${database}.*",
     user       => "${username}@${host}",
-    require    => [ Mysql::Db[$database], Mysql_user["${username}@${host}"], Class['mysql::server'] ],
+    require    => [ Mysql_user["${username}@${host}"], Class['mysql::server'] ],
   }
 }

@@ -2,15 +2,51 @@
 classes:
   - dev
 
+kermit::web::rvm_version: '1.25.31'
+kermit::web::ruby_version: 'ruby-2.1.5'
+kermit::web::bundler_version: '1.7.7'
 database:
   development:
     adapter: mysql2
     host: 127.0.0.1
-    username: dev_dev
-    password: 3WtJxWJtUP3Aq9xt
-    database: dev_development
+    username: rails
+    password: rails
+    database: rails_development
     pool: 5
     timeout: 5000
     host_ip: 127.0.0.1
     access:
-      - 127.0.0.1/dev_development
+      - 127.0.0.1/rails_development
+  staging:
+    adapter: mysql2
+    host: 127.0.0.1
+    username: rails
+    password: rails
+    database: rails_staging
+    pool: 5
+    timeout: 5000
+    host_ip: 127.0.0.1
+    access:
+      - 127.0.0.1/rails_staging
+  production:
+    adapter: mysql2
+    host: 127.0.0.1
+    username: rails
+    password: rails
+    database: rails_production
+    pool: 5
+    timeout: 5000
+    host_ip: 127.0.0.1
+    access:
+      - 127.0.0.1/rails_production
+  test:
+    adapter: mysql2
+    host: 127.0.0.1
+    username: rails
+    password: rails
+    database: rails_test
+    pool: 5
+    timeout: 5000
+    host_ip: 127.0.0.1
+    access:
+      - 127.0.0.1/rails_test

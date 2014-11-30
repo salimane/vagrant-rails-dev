@@ -1,6 +1,15 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
+SETTINGS = {
+  :hostname => 'vagrant.rails.com',
+  :nodename => 'vagrant.rails',
+  :domain   => 'local.rails.com',
+  :ip       => '11.11.11.11',
+  :numvcpus => '4',
+  :memsize  => '4096',
+  :box      => 'spantree/Centos-6.5_x86-64'
+}
 Vagrant.require_version ">= 1.6.5"
 VAGRANTFILE_API_VERSION = "2"
 
@@ -19,23 +28,23 @@ SCRIPT
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
-  config.vm.box = 'spantree/Centos-6.5_x86-64'
+  config.vm.box = SETTINGS[:box]
   config.vm.box_check_update = true
 
-  config.vm.hostname = 'vagrant.rails.com'
+  config.vm.hostname = SETTINGS[:hostname]
 
   # config.vm.network "forwarded_port", guest: 80, host: 8080
-  config.vm.network :private_network, ip: '11.11.11.11'
+  config.vm.network :private_network, ip: SETTINGS[:ip]
   # config.vm.network "public_network"
 
   config.hostmanager.enabled = true
   config.hostmanager.manage_host = true
   config.hostmanager.ignore_private_ip = false
   config.hostmanager.include_offline = true
-  config.vm.define 'vagrant-rails' do |node|
-    node.hostmanager.aliases = %w(local.rails.com)
-    node.vm.hostname = 'vagrant.rails.com'
-    node.vm.network :private_network, ip: '11.11.11.11'
+  config.vm.define SETTINGS[:nodename] do |node|
+    node.hostmanager.aliases = %w(SETTINGS[:domain])
+    node.vm.hostname = SETTINGS[:hostname]
+    node.vm.network :private_network, ip: SETTINGS[:ip]
   end
 
   # config.ssh.username = 'vagrant'
@@ -46,19 +55,19 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   config.vm.provider :virtualbox do |vb|
     # Use VBoxManage to customize the VM. For example to change memory:
-    vb.customize ['modifyvm', :id, '--memory', '4096']
+    vb.customize ['modifyvm', :id, '--memory', SETTINGS[:memsize]]
     # allow symlinks in vm
     vb.customize ["setextradata", :id, "VBoxInternal2/SharedFoldersEnableSymlinksCreate/v-root", "1"]
     vb.customize ["modifyvm", :id, "--natdnshostresolver1", "off"]
     vb.customize ["modifyvm", :id, "--natdnsproxy1", "off"]
 
-    vb.customize ['modifyvm', :id, '--cpus', 4]
+    vb.customize ['modifyvm', :id, '--cpus', SETTINGS[:numvcpus]]
 
   end
 
   config.vm.provider  :vmware_fusion do |vb|
-    vb.vmx['numvcpus'] = '4'
-    vb.vmx['memsize'] = '2048'
+    vb.vmx['numvcpus'] = SETTINGS[:numvcpus]
+    vb.vmx['memsize'] = SETTINGS[:memsize]
   end
 
   # Update puppet to version 3.2.2 before using puppet provisioning.

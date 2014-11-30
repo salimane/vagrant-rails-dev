@@ -27,7 +27,7 @@ mod 'thias/sysctl',
 mod 'saz/sudo',
     :git => "https://github.com/saz/puppet-sudo.git"
 
-mod 'maestrodev/rvm', '1.5.8'
+mod 'maestrodev/rvm', '1.7.1'
 
 mod 'puppetlabs/firewall',
     :git => 'https://github.com/puppetlabs/puppetlabs-firewall'

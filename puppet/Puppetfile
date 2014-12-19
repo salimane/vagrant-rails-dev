@@ -40,3 +40,5 @@ mod 'saz/memcached',
 
 mod 'camptocamp/augeas',
     :git => 'https://github.com/camptocamp/puppet-augeas'
+
+mod '3fs/phantomjs', '0.0.5'

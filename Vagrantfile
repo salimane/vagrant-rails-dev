@@ -3,27 +3,28 @@
 
 SETTINGS = {
   :hostname => 'vagrant.rails.com',
-  :nodename => 'vagrant.rails',
   :domain   => 'local.rails.com',
   :ip       => '11.11.11.11',
   :numvcpus => '4',
   :memsize  => '4096',
   :box      => 'spantree/Centos-6.5_x86-64'
 }
-Vagrant.require_version ">= 1.6.5"
+Vagrant.require_version ">= 1.7.1"
 VAGRANTFILE_API_VERSION = "2"
 
 $puppet_update_script = <<SCRIPT
 rpm -qa puppetlabs-release | grep 'puppetlabs-release-6' || rpm -ivh http://yum.puppetlabs.com/puppetlabs-release-el-6.noarch.rpm
+rpm -qa epel-release | grep 'epel-release-6' || rpm -ivh http://download.fedoraproject.org/pub/epel/6/i386/epel-release-6-8.noarch.rpm
+rpm -qa remi-release | grep 'remi-release-6' || rpm -ivh http://rpms.famillecollet.com/enterprise/remi-release-6.rpm
 rpm -qa ruby-devel | grep 'ruby-devel-1.8.7' || yum -y install ruby-devel
 rpm -qa ruby-augeas | grep 'ruby-augeas-0.4.1' || yum -y install ruby-augeas-0.4.1
 rpm -qa ruby-json | grep 'ruby-json-1.5.5' || yum -y install ruby-json-1.5.5
-rpm -qa puppet | grep 'puppet-3.6.2' || yum -y install puppet-3.6.2
+rpm -qa puppet | grep 'puppet-3.7.3' || yum -y install puppet-3.7.3
 rpm -qa augeas-libs | grep 'augeas-libs-1.0.0' || yum -y install augeas-libs-1.0.0
 rpm -qa augeas-devel | grep 'augeas-devel-1.0.0' || yum -y install augeas-devel-1.0.0
 rpm -qa augeas | grep 'augeas-1.0.0' || yum -y install augeas-1.0.0
-gem list | grep 'puppet (3.6.2)' || gem install puppet -v3.6.2
-gem list | grep 'ruby-augeas (0.5.0)' || gem install ruby-augeas -v0.5.0
+gem list | grep 'puppet.*3.7.3' || gem install puppet -v3.7.3
+gem list | grep 'ruby-augeas.*0.5.0' || gem install ruby-augeas -v0.5.0
 SCRIPT
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
@@ -41,8 +42,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.hostmanager.manage_host = true
   config.hostmanager.ignore_private_ip = false
   config.hostmanager.include_offline = true
-  config.vm.define SETTINGS[:nodename] do |node|
-    node.hostmanager.aliases = %w(SETTINGS[:domain])
+  config.vm.define SETTINGS[:hostname] do |node|
+    node.hostmanager.aliases = [SETTINGS[:domain]]
     node.vm.hostname = SETTINGS[:hostname]
     node.vm.network :private_network, ip: SETTINGS[:ip]
   end
@@ -50,7 +51,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # config.ssh.username = 'vagrant'
   config.ssh.forward_agent = true
 
-  config.vm.synced_folder '../../src', '/home/vagrant/src', type: 'nfs'
+  config.vm.synced_folder '../', '/home/vagrant/src', type: 'nfs'
   config.vm.synced_folder '.', '/vagrant', type: 'nfs'
 
   config.vm.provider :virtualbox do |vb|
@@ -70,11 +71,11 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     vb.vmx['memsize'] = SETTINGS[:memsize]
   end
 
-  # Update puppet to version 3.2.2 before using puppet provisioning.
+  # Update puppet to its latest version before using puppet provisioning.
   config.vm.provision :shell, inline: $puppet_update_script
 
   config.vm.provision :puppet do |puppet|
-    puppet.options = '--verbose --debug'
+    # puppet.options = '--verbose --debug'
     puppet.manifests_path = 'puppet/manifests'
     puppet.module_path = 'puppet/modules'
     puppet.manifest_file  = 'site.pp'

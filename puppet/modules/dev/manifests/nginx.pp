@@ -1,24 +1,20 @@
-# Class: dev::web
+# Class: dev::nginx
 #
 # This class setup configuration for the dev web nodes:
 #
 # Parameters:
-#   - env : rails environment to use
 #
 # Actions:
-#   - Create application directories
 #   - Install/setup/manage nginx configurations
-#   - Install multi-user rvm
-#   - Install ruby, bundler
 #
 # Requires:
 #   - dev::dependencies
 #
 # Sample Usage:
-#   class { 'dev::web' : username => 'vagrant', group => 'vagrant' }
+#   class { 'dev::nginx' : username => 'vagrant', group => 'vagrant' }
 #
 #
-class dev::web ($username = 'vagrant', $group = 'vagrant') {
+class dev::nginx ($username = 'vagrant', $group = 'vagrant') {
 
   include dev::dependencies
 
@@ -84,13 +80,6 @@ class dev::web ($username = 'vagrant', $group = 'vagrant') {
     mode    => '0644',
     notify  => Service['nginx'],
     require => Package['nginx'],
-  }
-
-  # realize Exec['webtatic-replace-mysql']
-
-  package { 'mysql-devel':
-    ensure  => installed,
-    # require => Exec['webtatic-replace-mysql']
   }
 
 }

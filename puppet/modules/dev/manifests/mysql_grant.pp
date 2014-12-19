@@ -1,4 +1,4 @@
-# Define Resource Type: dev::db_grant
+# Define Resource Type: dev::mysql_grant
 #
 # This ressource type helps grant mysql access privileges to multiple hosts
 #
@@ -13,14 +13,14 @@
 #   - database already created with specifed user
 #
 # Sample Usage:
-#   db_grant { ['hostname1', 'hostname2'] :
+#   dev::mysql_grant { ['hostname1', 'hostname2'] :
 #       username => 'my_username',
 #       database => 'my_database',
 #       privileges => ['all'],
 #   }
 #
 #
-define dev::db_grant($username, $password, $database, $privileges) {
+define dev::mysql_grant($username, $password, $database, $privileges) {
   $host = regsubst($name, '^(.+)/([^-]+)$', '\1')
   # $database = regsubst($name, '^(.+)/([^-]+)$', '\2')
 
@@ -28,7 +28,7 @@ define dev::db_grant($username, $password, $database, $privileges) {
     ensure        => 'present',
     password_hash => mysql_password($password),
     provider      => 'mysql',
-    require       => Class['mysql::server'],
+    require       => Class['::mysql::server'],
   }
   ensure_resource('mysql_user', "${username}@${host}", $user_resource)
   mysql_grant { "${username}@${host}/${database}.*":
@@ -36,6 +36,6 @@ define dev::db_grant($username, $password, $database, $privileges) {
     provider   => 'mysql',
     table      => "${database}.*",
     user       => "${username}@${host}",
-    require    => [ Mysql_user["${username}@${host}"], Class['mysql::server'] ],
+    require    => [ Mysql_user["${username}@${host}"], Class['::mysql::server'] ],
   }
 }

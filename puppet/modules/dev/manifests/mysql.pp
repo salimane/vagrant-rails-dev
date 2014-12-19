@@ -1,6 +1,6 @@
-# Class: dev::db
+# Class: dev::mysql
 #
-# This class installs/setup configuration for the dev database
+# This class installs/setup configuration for the mysql database
 #
 # Parameters:
 #   - env : rails environment to use
@@ -16,10 +16,10 @@
 #   - dev::dependencies
 #
 # Sample Usage:
-#   class { 'dev::db' : env => 'staging' }
+#   class { 'dev::mysql' : env => 'staging' }
 #
 #
-class dev::db($env = 'development') {
+class dev::mysql($env = 'development') {
   include dev::dependencies
 
   realize Group['mysql']
@@ -29,11 +29,11 @@ class dev::db($env = 'development') {
 
   #Needs mysql client
   # realize Exec['webtatic-replace-mysql']
-  class { 'mysql::client':
+  class { '::mysql::client' :
     package_name => 'mysql',
     # require      => Exec['webtatic-replace-mysql']
-  } ->
-  class { 'mysql::server':
+  }
+  class { '::mysql::server' :
     package_name     => 'mysql-server',
     root_password    => 'wrB5TvCCfYEsBN4k',
     override_options => {
@@ -46,7 +46,7 @@ class dev::db($env = 'development') {
   }
 
   Database {
-    require => Class['mysql::server'],
+    require => Class['::mysql::server'],
   }
 
   mysql::db { $account[$env]['database']:
@@ -57,12 +57,12 @@ class dev::db($env = 'development') {
     charset  => 'utf8',
   }
 
-  dev::db_grant { $account[$env]['access'] :
+  dev::mysql_grant { $account[$env]['access'] :
     username   => $account[$env]['username'],
     password   => $account[$env]['password'],
     database   => $account[$env]['database'],
     privileges => ['all'],
-    require    => Class['mysql::server']
+    require    => Class['::mysql::server']
   }
 
   # mysql::db { $account['test']['database']:
@@ -73,7 +73,7 @@ class dev::db($env = 'development') {
   #   charset  => 'utf8',
   # }
 
-  dev::db_grant { $account['test']['access'] :
+  dev::mysql_grant { $account['test']['access'] :
     username   => $account['test']['username'],
     password   => $account['test']['password'],
     database   => '*',
@@ -88,7 +88,7 @@ class dev::db($env = 'development') {
     charset  => 'utf8',
   }
 
-  dev::db_grant { $account['staging']['access'] :
+  dev::mysql_grant { $account['staging']['access'] :
     username   => $account['staging']['username'],
     password   => $account['staging']['password'],
     database   => $account['staging']['database'],
@@ -103,14 +103,14 @@ class dev::db($env = 'development') {
     charset  => 'utf8',
   }
 
-  dev::db_grant { $account['production']['access'] :
+  dev::mysql_grant { $account['production']['access'] :
     username   => $account['production']['username'],
     password   => $account['production']['password'],
     database   => $account['production']['database'],
     privileges => ['all'],
   }
 
-  include mysql::server::account_security
-  include mysql::server::mysqltuner
+  # include ::mysql::server::account_security
+  include ::mysql::server::mysqltuner
 
 }

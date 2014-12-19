@@ -1,129 +1,131 @@
 FORGE
   remote: https://forgeapi.puppetlabs.com
   specs:
-    maestrodev/rvm (1.5.8)
-      puppetlabs/stdlib (>= 3.2.0)
-    puppetlabs/apt (1.5.0)
-      puppetlabs/stdlib (>= 2.2.1)
-    puppetlabs/concat (1.1.0)
-      puppetlabs/stdlib (>= 4.0.0)
+    3fs-phantomjs (0.0.5)
+    maestrodev-rvm (1.7.1)
+      puppetlabs-stdlib (>= 3.2.0)
+    puppetlabs-apt (1.5.0)
+      puppetlabs-stdlib (>= 2.2.1)
+    puppetlabs-concat (1.1.0)
+      puppetlabs-stdlib (>= 4.0.0)
 
 GIT
   remote: https://github.com/camptocamp/puppet-augeas
   ref: master
   sha: 5bb62dfc4a48b9cbc325858550ba184dcebad151
   specs:
-    camptocamp/augeas (0.2.1)
-      puppetlabs/stdlib (>= 3.2.0)
+    camptocamp-augeas (0.2.1)
+      puppetlabs-stdlib (>= 3.2.0)
 
 GIT
   remote: https://github.com/jfryman/puppet-nginx.git
   ref: master
   sha: 74855ff1ee7518d9743d9461e1249af23aeda975
   specs:
-    jfryman/nginx (0.0.9)
-      puppetlabs/apt (>= 1.0.0)
-      puppetlabs/concat (>= 1.0.0)
-      puppetlabs/stdlib (>= 0.1.6)
+    jfryman-nginx (0.0.9)
+      puppetlabs-apt (>= 1.0.0)
+      puppetlabs-concat (>= 1.0.0)
+      puppetlabs-stdlib (>= 0.1.6)
 
 GIT
   remote: https://github.com/puppetlabs/puppetlabs-firewall
   ref: master
   sha: cf786dcc5bee4277fc5244ab190364953bbe4f85
   specs:
-    puppetlabs/firewall (1.1.1)
+    puppetlabs-firewall (1.1.1)
 
 GIT
   remote: https://github.com/puppetlabs/puppetlabs-mysql.git
   ref: master
   sha: f6e427c730ba2c5d0050f22e14c6cef82bdd97d9
   specs:
-    puppetlabs/mysql (2.2.3)
-      puppetlabs/stdlib (>= 3.2.0)
+    puppetlabs-mysql (2.2.3)
+      puppetlabs-stdlib (>= 3.2.0)
 
 GIT
   remote: https://github.com/puppetlabs/puppetlabs-ntp.git
   ref: master
   sha: 91242345ff89c2026de3c72bc86c43aa595b8109
   specs:
-    puppetlabs/ntp (3.1.0)
-      puppetlabs/stdlib (>= 4.0.0)
+    puppetlabs-ntp (3.1.0)
+      puppetlabs-stdlib (>= 4.0.0)
 
 GIT
   remote: https://github.com/puppetlabs/puppetlabs-postgresql
   ref: master
   sha: 5d4ecb1b04c908fdc274c14e0e93276c8b132d2e
   specs:
-    puppetlabs/postgresql (3.3.3)
-      puppetlabs/apt (< 2.0.0, >= 1.1.0)
-      puppetlabs/concat (< 2.0.0, >= 1.0.0)
-      puppetlabs/firewall (>= 0.0.4)
-      puppetlabs/stdlib (< 5.0.0, >= 3.2.0)
+    puppetlabs-postgresql (3.3.3)
+      puppetlabs-apt (< 2.0.0, >= 1.1.0)
+      puppetlabs-concat (< 2.0.0, >= 1.0.0)
+      puppetlabs-firewall (>= 0.0.4)
+      puppetlabs-stdlib (< 5.0.0, >= 3.2.0)
 
 GIT
   remote: https://github.com/puppetlabs/puppetlabs-sqlite.git
   ref: master
   sha: 84a0a6d26a2a8ef9c6e1f6a9d4c6580a3e3d1162
   specs:
-    puppetlabs/sqlite3 (0.0.1)
+    puppetlabs-sqlite3 (0.0.1)
 
 GIT
   remote: https://github.com/puppetlabs/puppetlabs-stdlib.git
   ref: master
   sha: f0495091551d439f27fc0ef86a9f23b81e1138eb
   specs:
-    puppetlabs/stdlib (4.2.1)
+    puppetlabs-stdlib (4.2.1)
 
 GIT
   remote: https://github.com/ripienaar/puppet-concat.git
   ref: master
   sha: 56876f8ce632b246c9119b6ae7fdb5322afd23af
   specs:
-    ripienaar/concat (1.1.0)
-      puppetlabs/stdlib (>= 4.2.0)
+    ripienaar-concat (1.1.0)
+      puppetlabs-stdlib (>= 4.2.0)
 
 GIT
   remote: https://github.com/saz/puppet-memcached
   ref: master
   sha: 468742fe7d1252ddf5ca0362342f00db64809caa
   specs:
-    saz/memcached (0.0.1)
+    saz-memcached (0.0.1)
 
 GIT
   remote: https://github.com/saz/puppet-sudo.git
   ref: master
   sha: 10e5e8b297fc5b254a4030e0a1d1fd90f3c93a68
   specs:
-    saz/sudo (3.0.6)
-      puppetlabs/stdlib (>= 2.3.0)
+    saz-sudo (3.0.6)
+      puppetlabs-stdlib (>= 2.3.0)
 
 GIT
   remote: https://github.com/stahnma/puppet-module-epel.git
   ref: master
   sha: 97be270da3b8d28b1e0fef7614b17812cf984f4e
   specs:
-    stahnma/epel (0.0.6)
+    stahnma-epel (0.0.6)
 
 GIT
   remote: https://github.com/thias/puppet-sysctl
   ref: master
   sha: 59e5f641f0b10b0805e1602932c09f0cadc4ec82
   specs:
-    thias/sysctl (0.3.1)
+    thias-sysctl (0.3.1)
 
 DEPENDENCIES
-  camptocamp/augeas (>= 0)
-  jfryman/nginx (>= 0)
-  maestrodev/rvm (= 1.5.8)
-  puppetlabs/firewall (>= 0)
-  puppetlabs/mysql (>= 0)
-  puppetlabs/ntp (>= 0)
-  puppetlabs/postgresql (>= 0)
-  puppetlabs/sqlite3 (>= 0)
-  puppetlabs/stdlib (>= 0)
-  ripienaar/concat (>= 0)
-  saz/memcached (>= 0)
-  saz/sudo (>= 0)
-  stahnma/epel (>= 0)
-  thias/sysctl (>= 0)
+  3fs-phantomjs (= 0.0.5)
+  camptocamp-augeas (>= 0)
+  jfryman-nginx (>= 0)
+  maestrodev-rvm (= 1.7.1)
+  puppetlabs-firewall (>= 0)
+  puppetlabs-mysql (>= 0)
+  puppetlabs-ntp (>= 0)
+  puppetlabs-postgresql (>= 0)
+  puppetlabs-sqlite3 (>= 0)
+  puppetlabs-stdlib (>= 0)
+  ripienaar-concat (>= 0)
+  saz-memcached (>= 0)
+  saz-sudo (>= 0)
+  stahnma-epel (>= 0)
+  thias-sysctl (>= 0)
 

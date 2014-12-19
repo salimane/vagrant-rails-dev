@@ -30,17 +30,18 @@ GEM
     librarian (0.1.2)
       highline
       thor (~> 0.15)
-    librarian-puppet (2.0.0)
+    librarian-puppet (2.0.1)
       librarian (>= 0.1.2)
       puppet_forge
       rsync
-    minitest (5.4.3)
+    minitest (5.5.0)
     multi_json (1.10.1)
     multipart-post (2.0.0)
     puppet (3.7.3)
       facter (> 1.6, < 3)
       hiera (~> 1.0)
       json_pure
+    puppet-lint (1.1.0)
     puppet_forge (1.0.3)
       her (~> 0.6)
     rsync (1.0.9)
@@ -53,5 +54,6 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  librarian-puppet (~> 2.0.0)
+  librarian-puppet (~> 2.0.1)
   puppet (~> 3.7.3)
+  puppet-lint (~> 1.1.0)

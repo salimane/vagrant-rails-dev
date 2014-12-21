@@ -21,9 +21,9 @@ class dev::dependencies($username = 'vagrant') {
   include epel
   include dev::webtatic
   include dev::sysctl
-  package { ['zsh', 'git', 'tmux', 'curl', 'wget', 'glances', 'iotop', 'nfs-utils']:
+  package { ['tmux', 'curl', 'wget', 'glances', 'iotop', 'nfs-utils', 'ncdu', 'nano']:
     ensure => installed,
   }
-  file { '/etc/ssh/sshd_config':  }
+  file { '/etc/ssh/sshd_config' :  }
 
 }

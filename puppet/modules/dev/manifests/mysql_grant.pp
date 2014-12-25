@@ -31,11 +31,12 @@ define dev::mysql_grant($username, $password, $database, $privileges) {
     require       => Class['::mysql::server'],
   }
   ensure_resource('mysql_user', "${username}@${host}", $user_resource)
-  mysql_grant { "${username}@${host}/${database}.*":
+  $grant_resource = {
     privileges => $privileges,
     provider   => 'mysql',
     table      => "${database}.*",
     user       => "${username}@${host}",
-    require    => [ Mysql_user["${username}@${host}"], Class['::mysql::server'] ],
+    require    => [ Mysql_user["${username}@${host}"], Class['mysql::server'] ],
   }
+  ensure_resource('mysql_grant', "${username}@${host}/${database}.*", $grant_resource)
 }

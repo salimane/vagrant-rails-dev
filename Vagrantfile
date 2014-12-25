@@ -25,6 +25,7 @@ rpm -qa augeas-devel | grep 'augeas-devel-1.0.0' || yum -y install augeas-devel-
 rpm -qa augeas | grep 'augeas-1.0.0' || yum -y install augeas-1.0.0
 gem list | grep 'puppet.*3.7.3' || gem install puppet -v3.7.3
 gem list | grep 'ruby-augeas.*0.5.0' || gem install ruby-augeas -v0.5.0
+yum update -y
 SCRIPT
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
@@ -78,6 +79,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     # puppet.options = '--verbose --debug'
     puppet.manifests_path = 'puppet/manifests'
     puppet.module_path = 'puppet/modules'
+    puppet.synced_folder_type = "nfs"
     puppet.manifest_file  = 'site.pp'
     puppet.hiera_config_path = 'puppet/hiera.yaml'
   end

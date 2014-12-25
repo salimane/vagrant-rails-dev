@@ -2,8 +2,8 @@
 classes:
   - dev
 
-kermit::web::rvm_version: '1.25.31'
-kermit::web::ruby_version: 'ruby-2.1.5'
+kermit::web::rvm_version: '1.26.6'
+kermit::web::ruby_version: 'ruby-2.2.0'
 kermit::web::bundler_version: '1.7.9'
 database:
   development:
@@ -14,7 +14,7 @@ database:
     database: rails_development
     pool: 5
     timeout: 5000
-    host_ip: 127.0.0.1
+    host_ip: 0.0.0.0
     access:
       - 127.0.0.1/rails_development
   staging:

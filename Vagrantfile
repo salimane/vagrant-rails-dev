@@ -9,7 +9,7 @@ SETTINGS = {
   :memsize  => '4096',
   :box      => 'spantree/Centos-6.5_x86-64'
 }
-Vagrant.require_version ">= 1.7.1"
+Vagrant.require_version ">= 1.7.2"
 VAGRANTFILE_API_VERSION = "2"
 
 $puppet_update_script = <<SCRIPT
@@ -28,6 +28,19 @@ gem list | grep 'ruby-augeas.*0.5.0' || gem install ruby-augeas -v0.5.0
 yum update -y
 SCRIPT
 
+needs_restart = false
+plugins = {
+  'vagrant-bindfs' => '0.3.2',
+  'vagrant-hostmanager' => '1.5.0',
+}
+plugins.each do |plugin, version|
+  unless Vagrant.has_plugin?(plugin)
+    system("vagrant plugin install #{plugin} --plugin-version #{version}") || exit!
+    needs_restart = true
+  end
+  exit system('vagrant', *ARGV) if needs_restart
+end
+
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   config.vm.box = SETTINGS[:box]
@@ -35,9 +48,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   config.vm.hostname = SETTINGS[:hostname]
 
-  # config.vm.network "forwarded_port", guest: 80, host: 8080
   config.vm.network :private_network, ip: SETTINGS[:ip]
-  # config.vm.network "public_network"
 
   config.hostmanager.enabled = true
   config.hostmanager.manage_host = true
@@ -49,22 +60,30 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     node.vm.network :private_network, ip: SETTINGS[:ip]
   end
 
-  # config.ssh.username = 'vagrant'
   config.ssh.forward_agent = true
+  config.nfs.map_uid = Process.uid
+  config.nfs.map_gid = Process.gid
 
   config.vm.synced_folder '../', '/home/vagrant/src', type: 'nfs'
   config.vm.synced_folder '.', '/vagrant', type: 'nfs'
 
   config.vm.provider :virtualbox do |vb|
     # Use VBoxManage to customize the VM. For example to change memory:
+    vb.customize ['modifyvm', :id, '--cpus', SETTINGS[:numvcpus]]
     vb.customize ['modifyvm', :id, '--memory', SETTINGS[:memsize]]
-    # allow symlinks in vm
-    vb.customize ["setextradata", :id, "VBoxInternal2/SharedFoldersEnableSymlinksCreate/v-root", "1"]
+
     vb.customize ["modifyvm", :id, "--natdnshostresolver1", "off"]
     vb.customize ["modifyvm", :id, "--natdnsproxy1", "off"]
+    vb.customize ["modifyvm", :id, "--cpuhotplug", "on"]
+    vb.customize ["modifyvm", :id, "--cpuexecutioncap", 85]
+    vb.customize ["modifyvm", :id, "--pae", "on"]
+    vb.customize ["modifyvm", :id, "--ioapic", "on"]
+    vb.customize ["modifyvm", :id, "--acpi", "off"]
+    vb.customize ["modifyvm", :id, "--hwvirtex", "on"]
+    vb.customize ["modifyvm", :id, "--vrde", "off"]
 
-    vb.customize ['modifyvm', :id, '--cpus', SETTINGS[:numvcpus]]
-
+    vb.customize ["setextradata", :id, "VBoxInternal/Devices/VMMDev/0/Config/GetHostTimeDisabled", "1"]
+    vb.customize ["setextradata", :id, "VBoxInternal2/SharedFoldersEnableSymlinksCreate/v-root", "1"]
   end
 
   config.vm.provider  :vmware_fusion do |vb|
@@ -72,7 +91,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     vb.vmx['memsize'] = SETTINGS[:memsize]
   end
 
-  # Update puppet to its latest version before using puppet provisioning.
+  # Update puppet to the latest version before using puppet provisioning.
   config.vm.provision :shell, inline: $puppet_update_script
 
   config.vm.provision :puppet do |puppet|

@@ -2,9 +2,9 @@
 classes:
   - dev
 
-kermit::web::rvm_version: '1.26.6'
+kermit::web::rvm_version: '1.26.8'
 kermit::web::ruby_version: 'ruby-2.2.0'
-kermit::web::bundler_version: '1.7.9'
+kermit::web::bundler_version: '1.7.11'
 database:
   development:
     adapter: mysql2

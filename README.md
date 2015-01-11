@@ -10,7 +10,6 @@ Installation
 -	run the following commands:
 
 ```shell
-vagrant plugin install vagrant-hostmanager
 mkdir -p $HOME/src && cd $HOME/src
 git clone https://github.com/salimane/vagrant-rails-dev.git
 cd vagrant-rails-dev/

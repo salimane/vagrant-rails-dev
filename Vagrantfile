@@ -72,7 +72,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     vb.customize ['modifyvm', :id, '--cpus', SETTINGS[:numvcpus]]
     vb.customize ['modifyvm', :id, '--memory', SETTINGS[:memsize]]
 
-    vb.customize ["modifyvm", :id, "--natdnshostresolver1", "off"]
+    vb.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
     vb.customize ["modifyvm", :id, "--natdnsproxy1", "off"]
     vb.customize ["modifyvm", :id, "--cpuhotplug", "on"]
     vb.customize ["modifyvm", :id, "--cpuexecutioncap", 85]

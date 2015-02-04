@@ -2,36 +2,23 @@
 # vi: set ft=ruby :
 
 SETTINGS = {
-  :hostname => 'vagrant.rails.com',
-  :domain   => 'local.rails.com',
-  :ip       => '11.11.11.11',
-  :numvcpus => '4',
-  :memsize  => '4096',
-  :box      => 'spantree/Centos-6.5_x86-64'
+  hostname: 'vagrant.rails.com',
+  domain: 'local.rails.com',
+  ip: '11.11.11.11',
+  numvcpus: '4',
+  memsize: '4096',
+  root_volume_size: 60, # GB
+  swap_volume_size: 4, # GB
+  diskpath: './disk.vdi',
+  box: 'spantree/Centos-6.5_x86-64'
 }
-Vagrant.require_version ">= 1.7.2"
-VAGRANTFILE_API_VERSION = "2"
-
-$puppet_update_script = <<SCRIPT
-rpm -qa puppetlabs-release | grep 'puppetlabs-release-6' || rpm -ivh http://yum.puppetlabs.com/puppetlabs-release-el-6.noarch.rpm
-rpm -qa epel-release | grep 'epel-release-6' || rpm -ivh http://download.fedoraproject.org/pub/epel/6/i386/epel-release-6-8.noarch.rpm
-rpm -qa remi-release | grep 'remi-release-6' || rpm -ivh http://rpms.famillecollet.com/enterprise/remi-release-6.rpm
-rpm -qa ruby-devel | grep 'ruby-devel-1.8.7' || yum -y install ruby-devel
-rpm -qa ruby-augeas | grep 'ruby-augeas-0.4.1' || yum -y install ruby-augeas-0.4.1
-rpm -qa ruby-json | grep 'ruby-json-1.5.5' || yum -y install ruby-json-1.5.5
-rpm -qa puppet | grep 'puppet-3.7.3' || yum -y install puppet-3.7.3
-rpm -qa augeas-libs | grep 'augeas-libs-1.0.0' || yum -y install augeas-libs-1.0.0
-rpm -qa augeas-devel | grep 'augeas-devel-1.0.0' || yum -y install augeas-devel-1.0.0
-rpm -qa augeas | grep 'augeas-1.0.0' || yum -y install augeas-1.0.0
-gem list | grep 'puppet.*3.7.3' || gem install puppet -v3.7.3
-gem list | grep 'ruby-augeas.*0.5.0' || gem install ruby-augeas -v0.5.0
-yum update -y
-SCRIPT
+Vagrant.require_version '>= 1.7.2'
+VAGRANTFILE_API_VERSION = '2'
 
 needs_restart = false
 plugins = {
-  'vagrant-bindfs' => '0.3.2',
-  'vagrant-hostmanager' => '1.5.0',
+  'vagrant-bindfs' => '0.4.0',
+  'vagrant-hostmanager' => '1.5.0'
 }
 plugins.each do |plugin, version|
   unless Vagrant.has_plugin?(plugin)
@@ -49,6 +36,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.hostname = SETTINGS[:hostname]
 
   config.vm.network :private_network, ip: SETTINGS[:ip]
+  # config.vm.network :forwarded_port, guest: 3000, host: 80
 
   config.hostmanager.enabled = true
   config.hostmanager.manage_host = true
@@ -58,6 +46,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     node.hostmanager.aliases = [SETTINGS[:domain]]
     node.vm.hostname = SETTINGS[:hostname]
     node.vm.network :private_network, ip: SETTINGS[:ip]
+    # node.vm.network :forwarded_port, guest: 3000, host: 80
   end
 
   config.ssh.forward_agent = true
@@ -67,38 +56,67 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.synced_folder '../', '/home/vagrant/src', type: 'nfs'
   config.vm.synced_folder '.', '/vagrant', type: 'nfs'
 
+  file_to_disk = SETTINGS[:diskpath]
+
   config.vm.provider :virtualbox do |vb|
     # Use VBoxManage to customize the VM. For example to change memory:
     vb.customize ['modifyvm', :id, '--cpus', SETTINGS[:numvcpus]]
     vb.customize ['modifyvm', :id, '--memory', SETTINGS[:memsize]]
 
-    vb.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
-    vb.customize ["modifyvm", :id, "--natdnsproxy1", "off"]
-    vb.customize ["modifyvm", :id, "--cpuhotplug", "on"]
-    vb.customize ["modifyvm", :id, "--cpuexecutioncap", 85]
-    vb.customize ["modifyvm", :id, "--pae", "on"]
-    vb.customize ["modifyvm", :id, "--ioapic", "on"]
-    vb.customize ["modifyvm", :id, "--acpi", "off"]
-    vb.customize ["modifyvm", :id, "--hwvirtex", "on"]
-    vb.customize ["modifyvm", :id, "--vrde", "off"]
+    vb.customize ['modifyvm', :id, '--natdnshostresolver1', 'on']
+    vb.customize ['modifyvm', :id, '--natdnsproxy1', 'off']
+    vb.customize ['modifyvm', :id, '--cpuhotplug', 'on']
+    vb.customize ['modifyvm', :id, '--cpuexecutioncap', 85]
+    vb.customize ['modifyvm', :id, '--pae', 'on']
+    vb.customize ['modifyvm', :id, '--ioapic', 'on']
+    vb.customize ['modifyvm', :id, '--acpi', 'off']
+    vb.customize ['modifyvm', :id, '--hwvirtex', 'on']
+    vb.customize ['modifyvm', :id, '--vrde', 'off']
+    vb.customize ["modifyvm", :id, "--clipboard", "bidirectional"]
 
-    vb.customize ["setextradata", :id, "VBoxInternal/Devices/VMMDev/0/Config/GetHostTimeDisabled", "1"]
-    vb.customize ["setextradata", :id, "VBoxInternal2/SharedFoldersEnableSymlinksCreate/v-root", "1"]
+    vb.customize ['setextradata', :id, 'VBoxInternal/Devices/VMMDev/0/Config/GetHostTimeDisabled', '1']
+    vb.customize ['setextradata', :id, 'VBoxInternal2/SharedFoldersEnableSymlinksCreate/v-root', '1']
+
+    # FIXME: Find/Create a base box with a larger drive
+    # The CentOS image has insufficient space, so lets add
+    # another drive until we create a new box.
+    second_disk_size = SETTINGS[:root_volume_size] + SETTINGS[:swap_volume_size] - 19
+    if ARGV[0] == 'up' && !File.exist?(file_to_disk) && SETTINGS[:root_volume_size] > 20
+      puts "Creating #{second_disk_size}GB disk #{file_to_disk}."
+      vb.customize [
+        'createhd',
+        '--filename', file_to_disk,
+        '--format', 'VDI',
+        '--size', (second_disk_size) * 1024 # GB. base image has 20GB
+      ]
+      vb.customize [
+        'storageattach', :id,
+        '--storagectl', 'SATA Controller',
+        '--port', 1, '--device', 0,
+        '--type', 'hdd', '--medium',
+        file_to_disk
+      ]
+    end
   end
 
-  config.vm.provider  :vmware_fusion do |vb|
+  config.vm.provider :vmware_fusion do |vb|
     vb.vmx['numvcpus'] = SETTINGS[:numvcpus]
     vb.vmx['memsize'] = SETTINGS[:memsize]
   end
 
+  if SETTINGS[:root_volume_size] > 20
+    # Run script to map new disk
+    config.vm.provision :shell, path: 'scripts/add_new_disk.sh', :args => "#{SETTINGS[:root_volume_size]} #{SETTINGS[:swap_volume_size]}"
+  end
+
   # Update puppet to the latest version before using puppet provisioning.
-  config.vm.provision :shell, inline: $puppet_update_script
+  config.vm.provision :shell, path: 'scripts/update_packages.sh'
 
   config.vm.provision :puppet do |puppet|
     # puppet.options = '--verbose --debug'
     puppet.manifests_path = 'puppet/manifests'
     puppet.module_path = 'puppet/modules'
-    puppet.synced_folder_type = "nfs"
+    puppet.synced_folder_type = 'nfs'
     puppet.manifest_file  = 'site.pp'
     puppet.hiera_config_path = 'puppet/hiera.yaml'
   end
